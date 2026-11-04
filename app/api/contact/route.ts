@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
@@ -6,22 +7,58 @@ export async function POST(req: Request) {
   const email = String(body?.email ?? "").trim();
   const message = String(body?.message ?? "").trim();
 
-  if (!name || name.length > 100 || !/^\S+@\S+\.\S+$/.test(email) || !message || message.length > 2000) {
+  if (
+    !name ||
+    name.length > 100 ||
+    !/^\S+@\S+\.\S+$/.test(email) ||
+    !message ||
+    message.length > 2000
+  ) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
 
-  const key = process.env.RESEND_API_KEY;
+  const host = process.env.SMTP_HOST;
+  const port = Number(process.env.SMTP_PORT);
+  const user = process.env.SMTP_USER;
+  const password = process.env.SMTP_PASS;
+  const secure = process.env.SMTP_SECURE === "true";
   const to = process.env.CONTACT_TO;
-  if (!key || !to) {
-    console.error("[contact] RESEND_API_KEY or CONTACT_TO is not configured");
-    return NextResponse.json({ error: "Email delivery is not configured" }, { status: 503 });
+
+  if (
+    !host ||
+    !Number.isInteger(port) ||
+    port < 1 ||
+    port > 65535 ||
+    !user ||
+    !password ||
+    !to
+  ) {
+    console.error("[contact] SMTP settings or CONTACT_TO are not configured correctly");
+    return NextResponse.json(
+      { error: "Email delivery is not configured" },
+      { status: 503 },
+    );
   }
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from: "Portfolio <onboarding@resend.dev>", to: [to], reply_to: email, subject: `New message from ${name}`, text: `${message}\n\n— ${name} <${email}>` }),
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure,
+    auth: { user, pass: password },
   });
-  if (!res.ok) return NextResponse.json({ error: "Send failed" }, { status: 502 });
-  return NextResponse.json({ ok: true, delivered: true });
+
+  try {
+    await transporter.sendMail({
+      from: { name: "Portfolio contact", address: user },
+      to,
+      replyTo: email,
+      subject: `New message from ${name}`,
+      text: `${message}\n\n— ${name} <${email}>`,
+    });
+
+    return NextResponse.json({ ok: true, delivered: true });
+  } catch (error) {
+    console.error("[contact] Failed to send email", error);
+    return NextResponse.json({ error: "Send failed" }, { status: 502 });
+  }
 }
