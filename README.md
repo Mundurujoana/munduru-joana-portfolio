@@ -18,6 +18,8 @@ The optional live-chat widget uses Tawk.to. Create a free Tawk.to property and a
 ## Deploy with Docker on Render
 The included `Dockerfile` builds Next.js in standalone mode. In Render, create a **Web Service**, connect this repository, and select **Docker** as the runtime. Add `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, and `CONTACT_TO` under the service's environment variables. Use `smtp.gmail.com`, `465`, and `true` for the first three values. Deploy; Render builds and runs the container from the Dockerfile. Do not add a separate start command.
 
+**Important:** Render Free web services block outbound SMTP ports `465` and `587`, so Gmail SMTP requires a paid Render web service. See [Render's free instance limitations](https://render.com/docs/free#outbound-network-traffic).
+
 For local Docker testing, build and run:
 
 ```sh
