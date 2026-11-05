@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative grid items-start gap-8 overflow-x-clip pb-6 pt-8 sm:pb-4 sm:pt-12 md:grid-cols-2 md:items-stretch md:gap-12 md:pb-2 md:pt-16"
+      className="relative grid items-start gap-8 overflow-x-clip pb-6 pt-8 sm:pb-4 sm:pt-12 lg:grid-cols-2 lg:items-stretch lg:gap-12 lg:pb-2 lg:pt-16"
     >
       <div className="order-1 flex flex-col md:order-1">
         <span className="inline-flex w-fit animate-fadeup items-center gap-2 rounded-full border border-[#173f2b]/15 bg-white/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#173f2b]/80 backdrop-blur">
@@ -17,12 +17,15 @@ export default function Hero() {
           Open to new projects
         </span>
 
-        <h1 className="mt-5 max-w-2xl animate-fadeup text-[3.75rem] font-extrabold leading-[1.05] tracking-tight [animation-delay:100ms]">
-          I’m <span className="text-shimmer">{profile.name},</span>
+        <h1 className="mt-5 max-w-2xl animate-fadeup text-[clamp(2.5rem,7vw,3.75rem)] font-extrabold leading-[1.05] tracking-tight [animation-delay:100ms]">
+          I’m <span className="text-[#173f2b]">{profile.name},</span>
           <br />
-          Frontend Developer
+          <span className="text-[#a96900]">Frontend Developer</span>
           <br />
-          based in {profile.location.split(",")[0]}.
+          based in{" "}
+          <span className="text-[#173f2b]">
+            {profile.location.split(",")[0]}.
+          </span>
         </h1>
 
         <p className="mt-5 max-w-lg animate-fadeup leading-7 text-zinc-600 [animation-delay:200ms]">
@@ -76,7 +79,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative order-2 mx-auto w-full max-w-[360px] animate-fadeup [animation-delay:300ms] sm:max-w-[400px] md:-top-14 md:-mb-14 md:order-2 md:max-w-[420px]">
+      <div className="relative order-2 mx-auto w-full max-w-[360px] animate-fadeup [animation-delay:300ms] sm:max-w-[400px] lg:-top-14 lg:-mb-14 lg:order-2 lg:max-w-[420px]">
         <Tilt max={9}>
           <div className="group relative aspect-[5/6]">
             {/* Orbiting glow dots (behind the photo) */}
@@ -153,6 +156,28 @@ export default function Hero() {
                 </strong>
                 <span className="mt-0.5 block text-xs text-zinc-500">
                   Modern web apps
+                </span>
+              </span>
+            </div>
+
+            <div
+              className="float absolute right-[2%] top-[12%] z-20 flex items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-2 text-[#173f2b] shadow-[0_12px_28px_-16px_rgba(23,63,43,0.4)] backdrop-blur sm:right-[-2%]"
+              style={{ animationDelay: "-4.5s" }}
+            >
+              <span className="rounded-full bg-[#f5ad16]/20 px-2 py-1 font-mono text-[9px] font-bold tracking-wide text-[#a96900]">
+                API
+              </span>
+              <span className="text-xs font-semibold">REST &amp; integrations</span>
+            </div>
+
+            <div className="float absolute left-[-38%] top-[43%] z-20 hidden items-center gap-3 rounded-2xl border border-white/70 bg-white/95 p-3 pr-5 text-[#173f2b] shadow-[0_18px_40px_-18px_rgba(23,63,43,0.3)] backdrop-blur lg:flex">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#173f2b]/10 font-mono text-sm font-bold text-[#173f2b]">
+                TS
+              </span>
+              <span>
+                <strong className="block text-sm">TypeScript</strong>
+                <span className="mt-0.5 block text-xs text-zinc-500">
+                  Agile teamwork
                 </span>
               </span>
             </div>
