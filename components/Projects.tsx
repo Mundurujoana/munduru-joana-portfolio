@@ -2,23 +2,14 @@ import { stack, profile } from "@/data/portfolio";
 import ScrollReveal from "./ScrollReveal";
 import ProjectPreview from "./ProjectPreview";
 
-/*
-  HOW THE PREVIEWS WORK
-  - If a project has a live `href`, the card shows an automatic screenshot of that site (via thum.io),
-    so it always looks like the real thing.
-  - For work projects with no public link (ClinicPesa, Kiira), drop a screenshot in /public/projects/
-    and set `image: "/projects/your-file.png"`. Until then a branded placeholder is shown.
-  - Set `href` to the live site when you have it. Cards with no href are not clickable.
-*/
-
 type Project = {
   title: string;
-  label: string; // pill on the preview
+  label: string;
   description: string;
   tags: string[];
-  href?: string; // live site (or GitHub if there is no live site)
-  linkText?: string; // "Open Website" | "View on GitHub"
-  image?: string; // optional local screenshot, overrides the auto preview
+  href?: string;
+  linkText?: string;
+  image?: string;
 };
 
 const projects: Project[] = [
@@ -118,35 +109,35 @@ function Card({ project }: { project: Project }) {
   return (
     <Wrapper
       {...wrapperProps}
-      className="group flex h-full flex-col rounded-[2rem] border border-[#173f2b]/10 bg-[#e1eee3] p-3 text-[#173f2b] shadow-[0_32px_60px_-20px_rgba(23,63,43,0.5),0_14px_26px_-12px_rgba(23,63,43,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_44px_80px_-20px_rgba(23,63,43,0.6),0_18px_32px_-12px_rgba(23,63,43,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f5ad16]"
+      className="group flex h-full min-w-0 flex-col rounded-3xl border border-[#173f2b]/10 bg-[#e1eee3] p-2.5 text-[#173f2b] shadow-[0_18px_35px_-22px_rgba(23,63,43,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_45px_-22px_rgba(23,63,43,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f5ad16] sm:rounded-[2rem] sm:p-3 sm:shadow-[0_32px_60px_-20px_rgba(23,63,43,0.5),0_14px_26px_-12px_rgba(23,63,43,0.35)] sm:hover:shadow-[0_44px_80px_-20px_rgba(23,63,43,0.6),0_18px_32px_-12px_rgba(23,63,43,0.4)]"
     >
-      {/* Live preview */}
-      <div className="relative aspect-[16/10] overflow-hidden rounded-[1.4rem] bg-[#f7f2e7]">
+      <div className="relative aspect-[16/10] min-w-0 overflow-hidden rounded-2xl bg-[#f7f2e7] sm:rounded-[1.4rem]">
         <ProjectPreview title={title} label={label} image={project.image} />
-        <span className="absolute bottom-3 left-3 rounded-full bg-white/95 px-3.5 py-1.5 text-sm font-semibold text-[#173f2b] shadow-sm backdrop-blur">
+        <span className="absolute bottom-2 left-2 max-w-[calc(100%-3.5rem)] truncate rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold text-[#173f2b] shadow-sm backdrop-blur sm:bottom-3 sm:left-3 sm:px-3.5 sm:py-1.5 sm:text-sm">
           {label}
         </span>
         {href && (
           <span
             aria-hidden
-            className="absolute bottom-3 right-3 grid h-10 w-10 place-items-center rounded-full bg-[#173f2b] text-lg text-white transition-colors group-hover:bg-[#f5ad16] group-hover:text-[#173f2b]"
+            className="absolute bottom-2 right-2 grid h-8 w-8 place-items-center rounded-full bg-[#173f2b] text-sm text-white transition-colors group-hover:bg-[#f5ad16] group-hover:text-[#173f2b] sm:bottom-3 sm:right-3 sm:h-10 sm:w-10 sm:text-lg"
           >
             ↗
           </span>
         )}
       </div>
 
-      {/* Details */}
-      <div className="flex flex-1 flex-col px-4 pb-3 pt-5">
-        <h3 className="text-2xl font-extrabold tracking-tight">{title}</h3>
-        <p className="mt-2 line-clamp-2 leading-7 text-[#173f2b]/70">
+      <div className="flex min-w-0 flex-1 flex-col px-2.5 pb-2 pt-4 sm:px-4 sm:pb-3 sm:pt-5">
+        <h3 className="break-words text-xl font-extrabold tracking-tight sm:text-2xl">
+          {title}
+        </h3>
+        <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#173f2b]/70 sm:text-base sm:leading-7">
           {description}
         </p>
         <ul className="mb-5 mt-4 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <li
               key={tag}
-              className="rounded-full bg-white/80 px-3 py-1 text-sm font-medium text-[#173f2b]"
+              className="rounded-full bg-white/80 px-2.5 py-1 text-xs font-medium text-[#173f2b] sm:px-3 sm:text-sm"
             >
               {tag}
             </li>
@@ -182,9 +173,9 @@ export default function Projects() {
         ))}
       </div>
 
-      <aside className="grid gap-6 rounded-[2rem] bg-[#f7f2e7] p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-end">
+      <aside className="grid min-w-0 gap-5 rounded-3xl bg-[#f7f2e7] p-5 sm:gap-6 sm:rounded-[2rem] sm:p-8 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
-          <h3 className="max-w-md text-3xl font-extrabold leading-tight tracking-tight text-[#173f2b]">
+          <h3 className="max-w-md text-2xl font-extrabold leading-tight tracking-tight text-[#173f2b] sm:text-3xl">
             The right tool for the right job.
           </h3>
           <ul className="mt-5 flex flex-wrap gap-2">
@@ -198,7 +189,7 @@ export default function Projects() {
             ))}
           </ul>
         </div>
-        <p className="text-6xl font-black leading-none tracking-tight text-[#173f2b]">
+        <p className="text-5xl font-black leading-none tracking-tight text-[#173f2b] sm:text-6xl">
           {profile.years}
           <span className="ml-2 text-lg font-semibold">years building</span>
         </p>

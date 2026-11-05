@@ -3,7 +3,6 @@ import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
 import ContactForm from "@/components/ContactForm";
-import LiveChat from "@/components/LiveChat";
 import ScrollReveal from "@/components/ScrollReveal";
 import { profile } from "@/data/portfolio";
 
@@ -11,8 +10,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <LiveChat />
-      <main className="mx-auto max-w-6xl px-6">
+      <main className="mx-auto max-w-6xl px-4 sm:px-6">
         <Hero />
         <About />
         <Projects />
@@ -20,7 +18,7 @@ export default function Home() {
         <ScrollReveal>
           <section
             id="contact"
-            className="relative mb-6 mt-24 overflow-hidden rounded-[2rem] border border-[#173f2b]/10 bg-[#f7f2e7] p-7 text-[#173f2b] sm:p-10 lg:p-12"
+            className="scroll-mt-32 relative mb-5 mt-16 overflow-hidden rounded-3xl border border-[#173f2b]/10 bg-[#f7f2e7] p-5 text-[#173f2b] sm:mb-6 sm:mt-24 sm:scroll-mt-24 sm:rounded-[2rem] sm:p-10 lg:p-12"
           >
             <div
               aria-hidden="true"
@@ -30,30 +28,30 @@ export default function Home() {
               aria-hidden="true"
               className="pointer-events-none absolute -right-8 -top-20 h-56 w-56 rounded-full border border-[#173f2b]/10"
             />
-            <div className="relative grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <div className="relative grid min-w-0 gap-6 sm:gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
               <div>
                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#a96900]">
                   Have a good one in mind?
                 </p>
-                <h2 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
+                <h2 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight sm:mt-4 sm:text-5xl">
                   Let’s build something.
                 </h2>
                 <p className="mt-4 max-w-sm leading-7 text-zinc-600">
-                  Tell me what you’re making and when it needs to ship. I’ll get
-                  back to you soon.
+                  Tell me what you’re making and when it needs to ship. The
+                  form opens a message in your email app.
                 </p>
                 <p className="mt-8 font-mono text-xs uppercase tracking-widest text-zinc-500">
                   Currently based in {profile.location}
                 </p>
               </div>
-              <div className="rounded-3xl bg-[#fffefa] p-5 text-[#24251f] sm:p-7">
+              <div className="min-w-0 rounded-2xl bg-[#fffefa] p-4 text-[#24251f] sm:rounded-3xl sm:p-7">
                 <ContactForm />
               </div>
             </div>
           </section>
         </ScrollReveal>
       </main>
-      <footer className="mx-auto mt-12 flex max-w-6xl flex-wrap items-center justify-between gap-4 border-t border-[#173f2b]/10 px-6 py-6 text-sm text-zinc-500">
+      <footer className="mx-auto mt-8 flex max-w-6xl flex-col items-center justify-between gap-3 border-t border-[#173f2b]/10 px-4 py-5 text-xs text-zinc-500 sm:mt-12 sm:flex-row sm:gap-4 sm:px-6 sm:py-6 sm:text-sm">
         <span>
           © {new Date().getFullYear()} {profile.name}
         </span>

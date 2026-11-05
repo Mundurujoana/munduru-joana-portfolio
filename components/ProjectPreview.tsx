@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 type Props = {
@@ -21,10 +22,11 @@ export default function ProjectPreview({ title, label, image }: Props) {
 
   if (image && !imageFailed) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
+      <Image
         src={image}
         alt={`${title} preview`}
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
         loading="lazy"
         onError={() => setImageFailed(true)}
         className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"

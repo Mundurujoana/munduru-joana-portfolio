@@ -1,25 +1,37 @@
 import Image from "next/image";
 import { profile } from "@/data/portfolio";
+import { Magnetic, Tilt } from "./Effects";
 
 export default function Hero() {
   return (
     <section
       id="top"
-      className="grid items-stretch gap-8 pb-2 pt-12 sm:pb-2 sm:pt-16 md:grid-cols-2 md:gap-12"
+      className="relative grid items-start gap-8 overflow-x-clip pb-6 pt-8 sm:pb-4 sm:pt-12 md:grid-cols-2 md:items-stretch md:gap-12 md:pb-2 md:pt-16"
     >
       <div className="order-1 flex flex-col md:order-1">
-        <h1 className="max-w-2xl animate-fadeup text-4xl font-extrabold leading-[1.05] tracking-tight [animation-delay:100ms] sm:text-5xl lg:text-6xl">
-          I’m <span className="text-[#e69b00]">{profile.name},</span>
+        <span className="inline-flex w-fit animate-fadeup items-center gap-2 rounded-full border border-[#173f2b]/15 bg-white/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#173f2b]/80 backdrop-blur">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2f9e5f] opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2f9e5f]" />
+          </span>
+          Open to new projects
+        </span>
+
+        <h1 className="mt-5 max-w-2xl animate-fadeup text-[3.75rem] font-extrabold leading-[1.05] tracking-tight [animation-delay:100ms]">
+          I’m <span className="text-shimmer">{profile.name},</span>
           <br />
-          Software Developer
+          Frontend Developer
           <br />
           based in {profile.location.split(",")[0]}.
         </h1>
-        <p className="mt-5 max-w-lg animate-fadeup text-base leading-7 text-zinc-600 [animation-delay:200ms] sm:text-lg">
-          {profile.intro}
+
+        <p className="mt-5 max-w-lg animate-fadeup leading-7 text-zinc-600 [animation-delay:200ms]">
+          I build responsive React and Next.js interfaces, and turn data into
+          dashboards teams can act on.
         </p>
+
         <div
-          className="mt-4 flex animate-fadeup items-center gap-2 [animation-delay:400ms]"
+          className="mt-5 flex animate-fadeup items-center gap-2 [animation-delay:400ms]"
           aria-label="Social links"
         >
           <a
@@ -64,54 +76,113 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="group relative -top-14 order-2 mx-auto aspect-[5/6] w-full max-w-[420px] animate-fadeup [animation-delay:300ms] md:order-2">
-        <span
-          aria-hidden="true"
-          className="absolute left-[8%] top-[7%] h-3 w-3 rotate-45 border-2 border-[#e69b00] transition-transform duration-500 group-hover:rotate-[135deg]"
-        />
-        <span
-          aria-hidden="true"
-          className="absolute bottom-[8%] right-[8%] h-12 w-12 rounded-full bg-[#f5ad16]/40 blur-sm transition-transform duration-700 group-hover:scale-125"
-        />
+      <div className="relative order-2 mx-auto w-full max-w-[360px] animate-fadeup [animation-delay:300ms] sm:max-w-[400px] md:-top-14 md:-mb-14 md:order-2 md:max-w-[420px]">
+        <Tilt max={9}>
+          <div className="group relative aspect-[5/6]">
+            {/* Orbiting glow dots (behind the photo) */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-[108%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#173f2b]/10 sm:w-[122%]"
+            >
+              <div className="orbit h-full w-full">
+                <span className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5ad16] shadow-[0_0_18px_4px_rgba(245,173,22,0.7)]" />
+                <span className="absolute bottom-0 left-1/2 h-2 w-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-[#2f9e5f] shadow-[0_0_14px_3px_rgba(47,158,95,0.6)]" />
+                <span className="absolute left-0 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e69b00] shadow-[0_0_14px_3px_rgba(230,155,0,0.6)]" />
+              </div>
+            </div>
 
-        <div className="absolute inset-[7%] rounded-[2.5rem] bg-gradient-to-br from-[#f5ad16] via-[#e69b00] to-[#173f2b] p-[3px] shadow-[0_28px_70px_-28px_rgba(23,63,43,0.5)] transition-transform duration-700 ease-out group-hover:rotate-1 group-hover:scale-[1.02]">
-          <div className="h-full w-full overflow-hidden rounded-[calc(2.5rem-3px)] bg-[#f7f2e7]">
-            <Image
-              src="/profile.jpg"
-              alt={`${profile.name}, software developer`}
-              width={600}
-              height={600}
-              priority
-              sizes="(max-width: 768px) 85vw, 360px"
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            {/* Pulsing rings */}
+            <span
+              aria-hidden="true"
+              className="ring-pulse pointer-events-none absolute inset-[7%] rounded-[2.5rem] border-2 border-[#f5ad16]/50"
             />
+            <span
+              aria-hidden="true"
+              className="ring-pulse pointer-events-none absolute inset-[7%] rounded-[2.5rem] border-2 border-[#f5ad16]/50 [animation-delay:1.6s]"
+            />
+
+            <span
+              aria-hidden="true"
+              className="absolute left-[8%] top-[7%] h-3 w-3 rotate-45 border-2 border-[#e69b00] transition-transform duration-500 group-hover:rotate-[135deg]"
+            />
+            <span
+              aria-hidden="true"
+              className="absolute bottom-[8%] right-[8%] h-12 w-12 rounded-full bg-[#f5ad16]/40 blur-sm transition-transform duration-700 group-hover:scale-125"
+            />
+
+            <div
+              aria-hidden="true"
+              className="spin-border absolute inset-[6%] rounded-[2.5rem] opacity-60 blur-2xl"
+            />
+            <div className="spin-border absolute inset-[7%] rounded-[2.5rem] p-[3px] shadow-[0_28px_70px_-28px_rgba(23,63,43,0.5)]">
+              <div className="h-full w-full overflow-hidden rounded-[calc(2.5rem-3px)] bg-[#f7f2e7]">
+                <Image
+                  src="/profile.jpg"
+                  alt={`${profile.name}, frontend developer`}
+                  width={600}
+                  height={600}
+                  priority
+                  sizes="(max-width: 768px) 85vw, 360px"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              </div>
+            </div>
+
+            <div className="float absolute left-0 top-[23%] z-20 flex items-center gap-3 rounded-2xl border border-white/70 bg-white/95 p-3 pr-5 shadow-[0_18px_40px_-18px_rgba(23,63,43,0.35)] backdrop-blur sm:left-[-4%] sm:p-4 sm:pr-6">
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-[#f5ad16]/20 text-lg font-black text-[#a96900]">
+                R
+              </span>
+              <span>
+                <strong className="block text-sm text-[#173f2b]">React</strong>
+                <span className="mt-0.5 block text-xs text-zinc-500">
+                  Interactive UI
+                </span>
+              </span>
+            </div>
+
+            <div
+              className="float absolute bottom-[18%] right-0 z-20 flex items-center gap-3 rounded-2xl border border-white/70 bg-white/95 p-3 pr-5 shadow-[0_18px_40px_-18px_rgba(23,63,43,0.35)] backdrop-blur sm:right-[-4%] sm:p-4 sm:pr-6"
+              style={{ animationDelay: "-3s" }}
+            >
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-[#173f2b]/10 text-lg font-black text-[#173f2b]">
+                ✳
+              </span>
+              <span>
+                <strong className="block text-sm text-[#173f2b]">
+                  Next.js
+                </strong>
+                <span className="mt-0.5 block text-xs text-zinc-500">
+                  Modern web apps
+                </span>
+              </span>
+            </div>
+
+            <div
+              className="float absolute bottom-[6%] left-[4%] z-20 rounded-2xl bg-[#173f2b] px-4 py-2.5 text-white shadow-xl"
+              style={{ animationDelay: "-1.5s" }}
+            >
+              <span className="text-xl font-black text-[#f5ad16]">
+                {profile.years}
+              </span>
+              <span className="ml-2 font-mono text-[10px] uppercase tracking-widest text-white/70">
+                years
+              </span>
+            </div>
           </div>
-        </div>
-
-        <div className="absolute left-0 top-[23%] z-20 flex items-center gap-3 rounded-2xl border border-white/70 bg-white/95 p-3 pr-5 shadow-[0_18px_40px_-18px_rgba(23,63,43,0.3)] backdrop-blur transition-transform duration-500 ease-out group-hover:-translate-y-2 sm:left-[-2%] sm:p-4 sm:pr-6">
-          <span className="grid h-11 w-11 place-items-center rounded-xl bg-[#f5ad16]/20 text-lg font-black text-[#a96900]">
-            R
-          </span>
-          <span>
-            <strong className="block text-sm text-[#173f2b]">React</strong>
-            <span className="mt-0.5 block text-xs text-zinc-500">
-              Interactive UI
-            </span>
-          </span>
-        </div>
-
-        <div className="absolute bottom-[18%] right-0 z-20 flex items-center gap-3 rounded-2xl border border-white/70 bg-white/95 p-3 pr-5 shadow-[0_18px_40px_-18px_rgba(23,63,43,0.3)] backdrop-blur transition-transform duration-500 ease-out group-hover:translate-y-2 sm:right-[-2%] sm:p-4 sm:pr-6">
-          <span className="grid h-11 w-11 place-items-center rounded-xl bg-[#173f2b]/10 text-lg font-black text-[#173f2b]">
-            ✳
-          </span>
-          <span>
-            <strong className="block text-sm text-[#173f2b]">Next.js</strong>
-            <span className="mt-0.5 block text-xs text-zinc-500">
-              Modern web apps
-            </span>
-          </span>
-        </div>
+        </Tilt>
       </div>
+
+      {/* Bridge into About */}
+      <a
+        href="#about"
+        aria-label="Scroll to About"
+        className="order-3 col-span-full font-bold flex flex-col uppercase items-center gap-2 text-[25px] text-[#173f2b] transition-colors hover:text-[#173f2b]"
+      >
+        About me
+        <span className="relative h-12 w-0.5 overflow-hidden rounded-full bg-[#173f2b]/15">
+          <span className="scroll-dot absolute left-0 top-0 h-4 w-0.5 rounded-full bg-[#f5ad16]" />
+        </span>
+      </a>
     </section>
   );
 }
