@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { profile } from "@/data/portfolio";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import TawkChat from "@/components/TawkChat";
 import "./globals.css";
 
 const sans = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -17,6 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${sans.variable} ${mono.variable} overflow-x-hidden bg-[#fffefa] font-sans text-[#24251f] antialiased`}>
         {children}
+        <WhatsAppButton />
+        <TawkChat />
       </body>
     </html>
   );

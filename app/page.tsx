@@ -37,8 +37,8 @@ export default function Home() {
                   Let’s build something.
                 </h2>
                 <p className="mt-4 max-w-sm leading-7 text-zinc-600">
-                  Tell me what you’re making and when it needs to ship. The
-                  form opens a message in your email app.
+                  Tell me what you’re making and when it needs to ship. Your
+                  message goes straight to my inbox.
                 </p>
                 <p className="mt-8 font-mono text-xs uppercase tracking-widest text-zinc-500">
                   Currently based in {profile.location}
