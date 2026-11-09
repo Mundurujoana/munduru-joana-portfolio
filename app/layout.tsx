@@ -11,13 +11,23 @@ const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 export const metadata: Metadata = {
   title: `${profile.name} – ${profile.role}`,
   description: profile.bio,
-  openGraph: { title: `${profile.name} – ${profile.role}`, description: profile.bio, type: "website" },
+  openGraph: {
+    title: `${profile.name} – ${profile.role}`,
+    description: profile.bio,
+    type: "website",
+  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className={`${sans.variable} ${mono.variable} overflow-x-hidden bg-[#fffefa] font-sans text-[#24251f] antialiased`}>
+      <body
+        className={`${sans.variable} ${mono.variable} overflow-x-hidden bg-[#fffefa] font-sans text-[#24251f] antialiased`}
+      >
         {children}
         <WhatsAppButton />
         <TawkChat />

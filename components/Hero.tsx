@@ -167,7 +167,9 @@ export default function Hero() {
               <span className="rounded-full bg-[#f5ad16]/20 px-2 py-1 font-mono text-[9px] font-bold tracking-wide text-[#a96900]">
                 API
               </span>
-              <span className="text-xs font-semibold">REST &amp; integrations</span>
+              <span className="text-xs font-semibold">
+                REST &amp; integrations
+              </span>
             </div>
 
             <div className="float absolute left-[-38%] top-[43%] z-20 hidden items-center gap-3 rounded-2xl border border-white/70 bg-white/95 p-3 pr-5 text-[#173f2b] shadow-[0_18px_40px_-18px_rgba(23,63,43,0.3)] backdrop-blur lg:flex">

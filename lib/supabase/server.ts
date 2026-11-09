@@ -49,7 +49,10 @@ export async function createSupabaseServerClient() {
             cookieStore.set(name, value, options);
           });
         } catch (error) {
-          console.warn("Supabase auth cookies could not be refreshed here.", error);
+          console.warn(
+            "Supabase auth cookies could not be refreshed here.",
+            error,
+          );
         }
       },
     },

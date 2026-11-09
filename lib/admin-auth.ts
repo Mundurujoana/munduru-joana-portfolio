@@ -1,4 +1,7 @@
-import { createSupabaseServerClient, getConfiguredAdminEmail } from "@/lib/supabase/server";
+import {
+  createSupabaseServerClient,
+  getConfiguredAdminEmail,
+} from "@/lib/supabase/server";
 
 export async function isAuthenticatedAdmin() {
   const adminEmail = getConfiguredAdminEmail();

@@ -67,33 +67,49 @@ async function notifyByEmail(message: {
 export async function POST(request: NextRequest) {
   const origin = request.headers.get("origin");
   if (!origin || origin !== request.nextUrl.origin) {
-    return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+    return NextResponse.json(
+      { error: "Invalid request origin." },
+      { status: 403 },
+    );
   }
 
   if (!request.headers.get("content-type")?.includes("application/json")) {
-    return NextResponse.json({ error: "Expected a JSON request." }, { status: 415 });
+    return NextResponse.json(
+      { error: "Expected a JSON request." },
+      { status: 415 },
+    );
   }
 
   const contentLength = Number(request.headers.get("content-length") ?? 0);
   if (contentLength > 10_000) {
-    return NextResponse.json({ error: "The submitted message is too large." }, { status: 413 });
+    return NextResponse.json(
+      { error: "The submitted message is too large." },
+      { status: 413 },
+    );
   }
 
   let submission: ContactSubmission;
   try {
     submission = (await request.json()) as ContactSubmission;
   } catch {
-    return NextResponse.json({ error: "The request body is not valid JSON." }, { status: 400 });
+    return NextResponse.json(
+      { error: "The request body is not valid JSON." },
+      { status: 400 },
+    );
   }
 
   if (typeof submission.website === "string" && submission.website.trim()) {
     return NextResponse.json({ success: true });
   }
 
-  const name = typeof submission.name === "string" ? submission.name.trim() : "";
-  const email = typeof submission.email === "string" ? submission.email.trim() : "";
-  const subject = typeof submission.subject === "string" ? submission.subject.trim() : "";
-  const message = typeof submission.message === "string" ? submission.message.trim() : "";
+  const name =
+    typeof submission.name === "string" ? submission.name.trim() : "";
+  const email =
+    typeof submission.email === "string" ? submission.email.trim() : "";
+  const subject =
+    typeof submission.subject === "string" ? submission.subject.trim() : "";
+  const message =
+    typeof submission.message === "string" ? submission.message.trim() : "";
 
   if (
     !name ||
@@ -105,7 +121,9 @@ export async function POST(request: NextRequest) {
     message.length > 5000
   ) {
     return NextResponse.json(
-      { error: "Check your name, email, subject, and message, then try again." },
+      {
+        error: "Check your name, email, subject, and message, then try again.",
+      },
       { status: 400 },
     );
   }

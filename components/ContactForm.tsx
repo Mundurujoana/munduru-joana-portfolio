@@ -5,7 +5,9 @@ const field =
   "w-full rounded-xl border border-[#173f2b]/20 bg-white px-4 py-3 outline-none transition focus:border-[#e69b00] focus:ring-2 focus:ring-[#f5ad16]/20";
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "saved" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "saved" | "error"
+  >("idle");
   const [error, setError] = useState("");
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -27,11 +29,17 @@ export default function ContactForm() {
           website: data.get("website"),
         }),
       });
-      const result = (await response.json()) as { error?: string; saved?: boolean };
+      const result = (await response.json()) as {
+        error?: string;
+        saved?: boolean;
+      };
       if (!response.ok) {
         if (result.saved) {
           form.reset();
-          setError(result.error ?? "Your message was saved, but email alerts are not configured yet.");
+          setError(
+            result.error ??
+              "Your message was saved, but email alerts are not configured yet.",
+          );
           setStatus("saved");
           return;
         }
@@ -79,7 +87,13 @@ export default function ContactForm() {
       </label>
       <label className="grid gap-1 text-sm font-medium sm:col-span-2">
         Message
-        <textarea name="message" required rows={5} maxLength={5000} className={field} />
+        <textarea
+          name="message"
+          required
+          rows={5}
+          maxLength={5000}
+          className={field}
+        />
       </label>
       <div
         aria-hidden="true"

@@ -23,7 +23,8 @@ export default async function AdminMessagesPage() {
     return (
       <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <p role="alert" className="rounded-2xl bg-[#f7f2e7] p-6 text-[#173f2b]">
-          The message database is not configured. Set SUPABASE_SERVICE_ROLE_KEY to load the inbox.
+          The message database is not configured. Set SUPABASE_SERVICE_ROLE_KEY
+          to load the inbox.
         </p>
       </main>
     );
@@ -40,7 +41,8 @@ export default async function AdminMessagesPage() {
     return (
       <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <p role="alert" className="rounded-2xl bg-[#f7f2e7] p-6 text-[#173f2b]">
-          The inbox could not be loaded. Check that the Supabase migration has been applied.
+          The inbox could not be loaded. Check that the Supabase migration has
+          been applied.
         </p>
       </main>
     );

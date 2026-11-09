@@ -16,7 +16,11 @@ function createSupabaseBrowserClient() {
   return createBrowserClient(url, anonKey);
 }
 
-export default function AdminMessages({ messages: initialMessages }: { messages: ContactMessage[] }) {
+export default function AdminMessages({
+  messages: initialMessages,
+}: {
+  messages: ContactMessage[];
+}) {
   const router = useRouter();
   const [messages, setMessages] = useState(initialMessages);
   const [error, setError] = useState("");
@@ -32,32 +36,53 @@ export default function AdminMessages({ messages: initialMessages }: { messages:
         body: JSON.stringify({ is_read: !message.is_read }),
       });
       const result = (await response.json()) as { error?: string };
-      if (!response.ok) throw new Error(result.error ?? "Could not update the message.");
+      if (!response.ok)
+        throw new Error(result.error ?? "Could not update the message.");
 
       setMessages((current) =>
         current.map((item) =>
-          item.id === message.id ? { ...item, is_read: !message.is_read } : item,
+          item.id === message.id
+            ? { ...item, is_read: !message.is_read }
+            : item,
         ),
       );
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "Could not update the message.");
+      setError(
+        requestError instanceof Error
+          ? requestError.message
+          : "Could not update the message.",
+      );
     } finally {
       setBusyId("");
     }
   }
 
   async function deleteMessage(message: ContactMessage) {
-    if (!window.confirm(`Delete the enquiry from ${message.name}? This cannot be undone.`)) return;
+    if (
+      !window.confirm(
+        `Delete the enquiry from ${message.name}? This cannot be undone.`,
+      )
+    )
+      return;
 
     setError("");
     setBusyId(message.id);
     try {
-      const response = await fetch(`/api/admin/messages/${message.id}`, { method: "DELETE" });
+      const response = await fetch(`/api/admin/messages/${message.id}`, {
+        method: "DELETE",
+      });
       const result = (await response.json()) as { error?: string };
-      if (!response.ok) throw new Error(result.error ?? "Could not delete the message.");
-      setMessages((current) => current.filter((item) => item.id !== message.id));
+      if (!response.ok)
+        throw new Error(result.error ?? "Could not delete the message.");
+      setMessages((current) =>
+        current.filter((item) => item.id !== message.id),
+      );
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "Could not delete the message.");
+      setError(
+        requestError instanceof Error
+          ? requestError.message
+          : "Could not delete the message.",
+      );
     } finally {
       setBusyId("");
     }
@@ -101,7 +126,10 @@ export default function AdminMessages({ messages: initialMessages }: { messages:
       </div>
 
       {error && (
-        <p role="alert" className="mb-5 rounded-xl bg-red-50 p-4 text-sm text-red-800">
+        <p
+          role="alert"
+          className="mb-5 rounded-xl bg-red-50 p-4 text-sm text-red-800"
+        >
           {error}
         </p>
       )}
@@ -138,9 +166,14 @@ export default function AdminMessages({ messages: initialMessages }: { messages:
                     </span>
                   </div>
                   <p className="mt-2 break-words text-sm text-zinc-600">
-                    <span className="font-semibold text-[#24251f]">{message.name}</span>
+                    <span className="font-semibold text-[#24251f]">
+                      {message.name}
+                    </span>
                     {" · "}
-                    <a className="underline decoration-[#173f2b]/30 underline-offset-2" href={`mailto:${message.email}`}>
+                    <a
+                      className="underline decoration-[#173f2b]/30 underline-offset-2"
+                      href={`mailto:${message.email}`}
+                    >
                       {message.email}
                     </a>
                   </p>

@@ -1,6 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { isAuthenticatedAdmin } from "@/lib/admin-auth";
-import { createSupabaseAdminClient, hasSupabaseAdminConfig } from "@/lib/supabase/server";
+import {
+  createSupabaseAdminClient,
+  hasSupabaseAdminConfig,
+} from "@/lib/supabase/server";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
@@ -16,15 +19,24 @@ function isUuid(value: string) {
 
 async function authorize(request: NextRequest) {
   if (!isSameOrigin(request)) {
-    return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+    return NextResponse.json(
+      { error: "Invalid request origin." },
+      { status: 403 },
+    );
   }
 
   if (!hasSupabaseAdminConfig()) {
-    return NextResponse.json({ error: "The admin inbox is not configured." }, { status: 503 });
+    return NextResponse.json(
+      { error: "The admin inbox is not configured." },
+      { status: 503 },
+    );
   }
 
   if (!(await isAuthenticatedAdmin())) {
-    return NextResponse.json({ error: "Administrator authentication required." }, { status: 401 });
+    return NextResponse.json(
+      { error: "Administrator authentication required." },
+      { status: 401 },
+    );
   }
 
   return null;
@@ -43,11 +55,17 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "The request body is not valid JSON." }, { status: 400 });
+    return NextResponse.json(
+      { error: "The request body is not valid JSON." },
+      { status: 400 },
+    );
   }
 
   if (typeof body.is_read !== "boolean") {
-    return NextResponse.json({ error: "A read status is required." }, { status: 400 });
+    return NextResponse.json(
+      { error: "A read status is required." },
+      { status: 400 },
+    );
   }
 
   const supabase = createSupabaseAdminClient();
@@ -58,7 +76,10 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 
   if (error) {
     console.error("Failed to update contact message read status.", error);
-    return NextResponse.json({ error: "The message could not be updated." }, { status: 500 });
+    return NextResponse.json(
+      { error: "The message could not be updated." },
+      { status: 500 },
+    );
   }
   if (count === 0) {
     return NextResponse.json({ error: "Message not found." }, { status: 404 });
@@ -84,7 +105,10 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
 
   if (error) {
     console.error("Failed to delete contact message.", error);
-    return NextResponse.json({ error: "The message could not be deleted." }, { status: 500 });
+    return NextResponse.json(
+      { error: "The message could not be deleted." },
+      { status: 500 },
+    );
   }
   if (count === 0) {
     return NextResponse.json({ error: "Message not found." }, { status: 404 });

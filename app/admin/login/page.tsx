@@ -9,10 +9,12 @@ export default function AdminLoginPage() {
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#a96900]">
             Admin setup required
           </p>
-          <h1 className="mt-3 text-3xl font-extrabold text-[#173f2b]">Inbox is not configured</h1>
+          <h1 className="mt-3 text-3xl font-extrabold text-[#173f2b]">
+            Inbox is not configured
+          </h1>
           <p className="mt-4 leading-7 text-zinc-600">
-            Configure the Supabase URL, public key, and administrator email in your server
-            environment before signing in.
+            Configure the Supabase URL, public key, and administrator email in
+            your server environment before signing in.
           </p>
         </section>
       </main>
@@ -25,7 +27,9 @@ export default function AdminLoginPage() {
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#a96900]">
           Private inbox
         </p>
-        <h1 className="mt-3 text-3xl font-extrabold text-[#173f2b]">Administrator sign in</h1>
+        <h1 className="mt-3 text-3xl font-extrabold text-[#173f2b]">
+          Administrator sign in
+        </h1>
         <p className="mt-3 leading-7 text-zinc-600">
           Sign in with the administrator account configured for this portfolio.
         </p>
