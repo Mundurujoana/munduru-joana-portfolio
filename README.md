@@ -13,7 +13,9 @@ npm run dev
 
 The app runs at http://localhost:3000.
 
-Edit `data/portfolio.ts` to update the profile, projects, and experience. Add your CV at `public/Munduru-Joana-CV.pdf`.
+Edit `data/portfolio.ts` to update the profile, projects, and experience. Add
+your CV at `public/docs/Munduru-Joana-CV.pdf`; the hero section opens it in the
+browser's PDF viewer.
 
 ## Contact inbox setup
 

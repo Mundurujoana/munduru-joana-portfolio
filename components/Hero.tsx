@@ -8,14 +8,23 @@ export default function Hero() {
       id="top"
       className="relative grid items-start gap-8 overflow-x-clip pb-6 pt-8 sm:pb-4 sm:pt-12 lg:grid-cols-2 lg:items-stretch lg:gap-12 lg:pb-2 lg:pt-16"
     >
-      <div className="order-1 flex flex-col md:order-1">
-        <span className="inline-flex w-fit animate-fadeup items-center gap-2 rounded-full border border-[#173f2b]/15 bg-white/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#173f2b]/80 backdrop-blur">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2f9e5f] opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2f9e5f]" />
+      <div className="order-1 flex flex-col md:order-1 lg:-translate-y-10">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="inline-flex w-fit animate-fadeup items-center gap-2 rounded-full border border-[#173f2b]/15 bg-white/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#173f2b]/80 backdrop-blur">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2f9e5f] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2f9e5f]" />
+            </span>
+            Open to new projects
           </span>
-          Open to new projects
-        </span>
+          <a
+            href={profile.cv}
+            className="inline-flex animate-fadeup items-center gap-1.5 rounded-full bg-[#173f2b] px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-white transition hover:-translate-y-0.5 hover:bg-[#245a3d]"
+          >
+            View my CV
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
 
         <h1 className="mt-5 max-w-2xl animate-fadeup text-[clamp(2.5rem,7vw,3.75rem)] font-extrabold leading-[1.05] tracking-tight [animation-delay:100ms]">
           I’m <span className="text-[#173f2b]">{profile.name},</span>

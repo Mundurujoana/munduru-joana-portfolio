@@ -27,7 +27,7 @@ export const profile = {
   email: "mundujoana@gmail.com",
   linkedin: "https://www.linkedin.com/in/munduru-joana/",
   github: "https://github.com/Mundurujoana",
-  cv: "/Munduru-Joana-CV.pdf",
+  cv: "/docs/Munduru-Joana-CV.pdf",
   years: "3+",
 };
 
