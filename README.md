@@ -35,12 +35,20 @@ honeypot field as basic spam protection. The public database role is limited
 to inserting message fields; reading, updating, and deleting messages remain
 restricted to server-side admin operations.
 
+## Email notifications
+
+The contact form requires Resend to be configured so it only reports success
+after the email provider accepts the message. Create a Resend account, verify a
+sender domain, then set `RESEND_API_KEY`, `CONTACT_NOTIFICATION_TO` (the inbox
+that should receive enquiries), and `CONTACT_NOTIFICATION_FROM` (the verified
+sender address). Set these in the deployment's environment-variable settings
+for Production and redeploy; local `.env.local` values are not automatically
+available to Vercel. Submissions are saved to Supabase before email is sent;
+if email is not configured, the form will say whether the message was saved to
+the site inbox.
+
 ## Optional integrations
 
-- **Email notifications:** Create a Resend account, verify a sender domain, and
-  set `RESEND_API_KEY`, `CONTACT_NOTIFICATION_TO`, and
-  `CONTACT_NOTIFICATION_FROM`. A failed notification is logged server-side;
-  it does not discard an already-saved enquiry.
 - **Live chat:** Create a Tawk.to property and set
   `NEXT_PUBLIC_TAWK_PROPERTY_ID` (and optionally
   `NEXT_PUBLIC_TAWK_WIDGET_ID`). The widget is loaded separately from the

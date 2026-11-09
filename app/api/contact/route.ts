@@ -23,12 +23,10 @@ async function notifyByEmail(message: {
   const to = process.env.CONTACT_NOTIFICATION_TO;
   const from = process.env.CONTACT_NOTIFICATION_FROM;
 
-  if (!apiKey && !to && !from) return;
   if (!apiKey || !to || !from) {
-    console.error(
-      "Contact message was saved, but email notification is not configured. Set RESEND_API_KEY, CONTACT_NOTIFICATION_TO, and CONTACT_NOTIFICATION_FROM.",
+    throw new Error(
+      "Email notifications are not configured. Set RESEND_API_KEY, CONTACT_NOTIFICATION_TO, and CONTACT_NOTIFICATION_FROM.",
     );
-    return;
   }
 
   try {
@@ -41,6 +39,7 @@ async function notifyByEmail(message: {
       body: JSON.stringify({
         from,
         to: [to],
+        reply_to: message.email,
         subject: `New portfolio enquiry: ${message.subject}`,
         text: [
           `From: ${message.name} <${message.email}>`,
@@ -53,16 +52,15 @@ async function notifyByEmail(message: {
 
     if (!response.ok) {
       console.error(
-        "Contact message was saved, but Resend could not send the notification.",
+        "Resend could not send the contact notification.",
         response.status,
         await response.text(),
       );
+      throw new Error("Resend could not send the contact notification.");
     }
   } catch (error) {
-    console.error(
-      "Contact message was saved, but the Resend notification request failed.",
-      error,
-    );
+    console.error("Resend notification request failed.", error);
+    throw error;
   }
 }
 
@@ -112,40 +110,46 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-    console.error("Contact message could not be saved because Supabase is not configured.");
-    return NextResponse.json(
-      { error: "The contact form is temporarily unavailable. Please try again later." },
-      { status: 503 },
-    );
+  let savedToInbox = false;
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    try {
+      const supabase = createSupabasePublicClient();
+      const { error } = await supabase.from("contact_messages").insert({
+        name,
+        email,
+        subject,
+        message,
+      });
+
+      if (error) {
+        console.error("Failed to save contact message in Supabase.", error);
+      } else {
+        savedToInbox = true;
+      }
+    } catch (error) {
+      console.error("Failed to save contact message in Supabase.", error);
+    }
   }
 
-  let supabase;
   try {
-    supabase = createSupabasePublicClient();
+    await notifyByEmail({ name, email, subject, message });
   } catch (error) {
-    console.error("Contact message could not be saved because Supabase is not configured.", error);
+    console.error("Contact email delivery failed.", error);
+    const emailNotConfigured =
+      error instanceof Error &&
+      error.message.startsWith("Email notifications are not configured.");
     return NextResponse.json(
-      { error: "The contact form is temporarily unavailable. Please try again later." },
-      { status: 503 },
+      {
+        error: savedToInbox
+          ? "Your message was saved, but email alerts are not configured yet."
+          : emailNotConfigured
+            ? "Email delivery is not configured yet, and your message could not be saved."
+            : "Your message could not be emailed or saved. Please try again later.",
+        saved: savedToInbox,
+      },
+      { status: emailNotConfigured ? 503 : 502 },
     );
   }
 
-  const { error } = await supabase.from("contact_messages").insert({
-    name,
-    email,
-    subject,
-    message,
-  });
-
-  if (error) {
-    console.error("Failed to save contact message in Supabase.", error);
-    return NextResponse.json(
-      { error: "Your message could not be saved. Please try again later." },
-      { status: 500 },
-    );
-  }
-
-  await notifyByEmail({ name, email, subject, message });
   return NextResponse.json({ success: true });
 }

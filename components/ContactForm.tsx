@@ -5,7 +5,7 @@ const field =
   "w-full rounded-xl border border-[#173f2b]/20 bg-white px-4 py-3 outline-none transition focus:border-[#e69b00] focus:ring-2 focus:ring-[#f5ad16]/20";
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "saved" | "error">("idle");
   const [error, setError] = useState("");
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -27,8 +27,14 @@ export default function ContactForm() {
           website: data.get("website"),
         }),
       });
-      const result = (await response.json()) as { error?: string };
+      const result = (await response.json()) as { error?: string; saved?: boolean };
       if (!response.ok) {
+        if (result.saved) {
+          form.reset();
+          setError(result.error ?? "Your message was saved, but email alerts are not configured yet.");
+          setStatus("saved");
+          return;
+        }
         throw new Error(result.error ?? "Your message could not be sent.");
       }
 
@@ -95,6 +101,11 @@ export default function ContactForm() {
         {status === "success" && (
           <p role="status" className="text-sm text-[#173f2b]">
             Thanks — your message has been sent.
+          </p>
+        )}
+        {status === "saved" && (
+          <p role="status" className="text-sm text-amber-800">
+            {error}
           </p>
         )}
         {status === "error" && (
